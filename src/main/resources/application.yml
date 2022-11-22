@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: development
+  application:
+    name: Sistema Angular
+security:
+  oauth2:
+    client:
+      scope: password
+  jwt:
+    signing-key: cm9uYWxkaW5obw==
+
