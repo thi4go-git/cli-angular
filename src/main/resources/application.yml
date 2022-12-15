@@ -9,4 +9,3 @@ security:
       scope: password
   jwt:
     signing-key: cm9uYWxkaW5obw==
-

@@ -9,6 +9,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @SpringBootApplication
 public class ClientesAngularApplication {
 
@@ -21,8 +26,16 @@ public class ClientesAngularApplication {
     public CommandLineRunner executar(@Autowired UsuarioServiceImpl usuarioService) {
         return args -> {
             String[] permissao = {"USER", "ADMIN"};
-            Usuario user = new Usuario("user", "user", permissao);
-            System.out.println(usuarioService.salvar(user).toString());
+
+            Set<String> roles = new HashSet<String>();
+            roles.add("USER");
+            roles.add("ADMIN");
+
+            Usuario user = new Usuario("user", "user", roles);
+            Usuario salvo = usuarioService.salvar(user);
+            System.out.println(salvo.toString());
+
+
         };
     }
 

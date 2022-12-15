@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,10 +23,22 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @Column
-    private String[] permissao;//  = {"USER", "ADMIN"};
+//    @Column
+//    private String[] permissao;//  = {"USER", "ADMIN"};
 
-    public Usuario(String username, String password, String[] permissao) {
+
+    @ElementCollection(targetClass = String.class)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuario_permissao",
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario", "permissao"})},
+            joinColumns = @JoinColumn(name = "usuario")
+    )
+    @Column(name = "permissao", length = 50)
+    private Set<String> permissao = new HashSet<String>();
+
+
+    public Usuario(String username, String password, Set<String> permissao) {
         this.username = username;
         this.password = password;
         this.permissao = permissao;
